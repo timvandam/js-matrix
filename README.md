@@ -32,7 +32,7 @@ Each method returns a new `Matrix` instance, they do not change their parant Mat
 ### subtract(substration)
 * `substraction` - A `Matrix` instance
 
-Multiply and substract have aliases: mult() and sub()
+Multiply and substract have aliases: ```mult()``` and ```sub()```
 
 ## Info
 This module was created just for fun, I wanted to make a module so I decided to make this. If you have any suggestions feel free to send me an email. (timvandamcs@gmail.com)
