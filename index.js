@@ -1,13 +1,14 @@
 function Matrix(args) {
+  let params;
   if (!(args instanceof Object) || Array.isArray(args))
-    const params = {
+    params = {
       rows: arguments[0],
       columns: arguments[1],
       matrix: arguments[2],
     };
-  else const params = args;
+  else params = args;
 
-  if (!Object.keys(params).filter(key => ['rows', 'columns', 'matrix'].indexOf(key) + 1).length ||
+  if (!Object.keys(params).filter(key => ['rows', 'columns', 'matrix'].indexOf(key) >= 0).length ||
     params.columns * params.rows !== params.matrix.length ||
     Object.values(params.matrix).filter(value => Number.isNaN(Number(value))).length)
     throw Error('Invalid constructor parameters.');
@@ -28,7 +29,7 @@ function Matrix(args) {
       });
 
     const rows = Array(this.rows).fill(0).map((value, index) => this.matrix.slice(index * this.matrix.length / this.rows, index * this.matrix.length / this.rows + this.matrix.length / this.rows));
-    const columns = Array(multiplier.columns).fill(0).map((value, index) => multiplier.matrix.filter((multiplierValue, multiplierIndex) => multiplierIndex % multiplierValue.columns === index));
+    const columns = Array(multiplier.columns).fill(0).map((value, index) => multiplier.matrix.filter((multiplierValue, multiplierIndex) => multiplierIndex % multiplier.columns === index));
 
     return new Matrix({
       rows: this.rows,
@@ -36,13 +37,13 @@ function Matrix(args) {
       matrix: Array(this.rows * multiplier.columns).fill(0).map((value, index) => {
         const row = Math.floor(index / multiplier.columns);
         const column = index % this.rows;
-        return rows[row].map((value, index) => value * columns[column][index]).reduce((x, y) => x + y);
+        return rows[row].map((rowValue, rowIndex) => rowValue * columns[column][rowIndex]).reduce((x, y) => x + y);
       }),
     });
   };
 
   this.add = addition => {
-    if (!(addition instanceof Matrix) || this.columns !== addition.columns || this.rows !== addition.rows || this.matrix.length !== addition.matrix.length) 
+    if (!(addition instanceof Matrix) || this.columns !== addition.columns || this.rows !== addition.rows || this.matrix.length !== addition.matrix.length)
       throw Error('Invalid matrix provided.');
 
     return new Matrix({
