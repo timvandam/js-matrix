@@ -1,4 +1,4 @@
-# node-matrix-lib
+# js-matrix
 This JavaScript module allows you to easily use matrices in JavaScript.
 
 ## Constructor
@@ -15,8 +15,8 @@ const MyNewMatrix = new Matrix({
 });
 
 const MyOtherMatrix = new Matrix(3, 3, [9, 8, 7,
-									6, 5, 4,
-									3, 2, 1]);
+					6, 5, 4,
+					3, 2, 1]);
 ```
 
 ## Methods
