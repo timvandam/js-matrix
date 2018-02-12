@@ -68,4 +68,4 @@ function Matrix(args) {
   this.sub = this.subtract;
 }
 
-if (typeof module !== 'undefined' || !module.exports) module.exports = Matrix;
+if (typeof module !== 'undefined' && module.exports) module.exports = Matrix;
