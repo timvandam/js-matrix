@@ -1,25 +1,27 @@
-function Matrix(args) {
-  let params;
-  if (!(args instanceof Object) || Array.isArray(args))
-    params = {
-      rows: arguments[0],
-      columns: arguments[1],
-      matrix: arguments[2],
-    };
-  else params = args;
+class Matrix {
+  constructor(args) {
+    let params;
+    if (!(args instanceof Object) || Array.isArray(args))
+      params = {
+        rows: arguments[0],
+        columns: arguments[1],
+        matrix: arguments[2],
+      };
+    else params = args;
 
-  if (!Object.keys(params).filter(key => ['rows', 'columns', 'matrix'].indexOf(key) >= 0).length ||
-    params.columns * params.rows !== params.matrix.length ||
-    Object.values(params.matrix).filter(value => Number.isNaN(Number(value))).length)
-    throw Error('Invalid constructor parameters.');
+    if (!Object.keys(params).filter(key => ['rows', 'columns', 'matrix'].indexOf(key) >= 0).length ||
+      params.columns * params.rows !== params.matrix.length ||
+      Object.values(params.matrix).filter(value => Number.isNaN(Number(value))).length)
+      throw new Error('Invalid constructor parameters.');
 
-  this.rows = params.rows;
-  this.columns = params.columns;
-  this.matrix = params.matrix;
+    this.rows = params.rows;
+    this.columns = params.columns;
+    this.matrix = params.matrix;
+  }
 
-  this.multiply = multiplier => {
+  multiply(multiplier) {
     if (Number.isNaN(Number(multiplier)) && !(multiplier instanceof Matrix))
-      throw Error('Invalid matrix/scalar provided.');
+      throw new Error('Invalid matrix/scalar provided.');
 
     if (!Number.isNaN(Number(multiplier)))
       return new Matrix({
@@ -42,9 +44,9 @@ function Matrix(args) {
     });
   };
 
-  this.add = addition => {
+  add(addition) {
     if (!(addition instanceof Matrix) || this.columns !== addition.columns || this.rows !== addition.rows || this.matrix.length !== addition.matrix.length)
-      throw Error('Invalid matrix provided.');
+      throw new Error('Invalid matrix provided.');
 
     return new Matrix({
       rows: this.rows,
@@ -53,9 +55,9 @@ function Matrix(args) {
     });
   };
 
-  this.subtract = substraction => {
+  subtract(substraction) {
     if (!(substraction instanceof Matrix) || this.columns !== substraction.columns || this.rows !== substraction.rows || this.matrix.length !== substraction.matrix.length)
-      throw Error('Invalid matrix provided.');
+      throw new Error('Invalid matrix provided.');
 
     return new Matrix({
       rows: this.rows,
@@ -64,8 +66,10 @@ function Matrix(args) {
     });
   };
 
-  this.mult = this.multiply;
-  this.sub = this.subtract;
 }
 
-if (typeof module !== 'undefined' && module.exports) module.exports = Matrix;
+Matrix.prototype.mult = Matrix.prototype.multiply;
+Matrix.prototype.sub = Matrix.prototype.subtract;
+
+if (typeof module !== 'undefined' && module.exports)
+  module.exports = Matrix;
